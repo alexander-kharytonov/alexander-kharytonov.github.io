@@ -12,7 +12,7 @@ export async function getUser({
   walletAddress: Address;
 }): Promise<User> {
   const response = await fetch(
-    `https://lj-quest-test-7f8838f4bec6.herokuapp.com/api/users/${walletAddress}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${walletAddress}`,
     {
       method: "GET",
       headers: {
@@ -34,17 +34,14 @@ export async function signUser({
 }: {
   walletAddress: Address;
 }): Promise<User> {
-  const response = await fetch(
-    `https://lj-quest-test-7f8838f4bec6.herokuapp.com/api/users`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ walletAddress }),
-    }
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ walletAddress }),
+  });
 
   if (!response.ok) {
     throw new Error("Failed to register user");
