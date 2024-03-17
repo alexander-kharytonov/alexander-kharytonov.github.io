@@ -20,7 +20,7 @@ export type Quests = Quest[];
 
 export async function getQuests(): Promise<Quests> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/quests`,
+    `https://lj-quest-test-7f8838f4bec6.herokuapp.com/api/quests`,
     {
       method: "GET",
       headers: {
@@ -41,7 +41,7 @@ export async function getQuests(): Promise<Quests> {
 
 export async function getQuest(questId: string): Promise<Quest> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/quests/${questId}`,
+    `https://lj-quest-test-7f8838f4bec6.herokuapp.com/api/quests/${questId}`,
     {
       method: "GET",
       headers: {
