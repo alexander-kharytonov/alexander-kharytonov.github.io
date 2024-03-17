@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Alert, Stack, Typography } from "@mui/material";
 import QuestSkeleton from "./quest-skeleton";
 import Quest from "./quest";
-import { Quests } from "lib/data-layer/quests";
+import { Quests as QuestsType } from "lib/data-layer/quests";
 
 export default function Quests({
   quests,
@@ -13,7 +13,7 @@ export default function Quests({
   questsSize,
 }: {
   title: string;
-  quests?: Quests;
+  quests?: QuestsType;
   useSkeleton?: boolean;
   questsSize?: number;
 }): React.ReactElement {
