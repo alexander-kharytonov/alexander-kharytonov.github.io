@@ -19,7 +19,7 @@ import Tilt from "react-parallax-tilt";
 import { StyledLinearProgress, StyledCard } from "app/components/styled";
 import { Star as StarIcon, System as SystemIcon } from "lib/icons";
 import { useThemeContext } from "lib/providers/mui.providers";
-import { Quest } from "lib/data-layer/quests";
+import { Quest as QuestType } from "lib/data-layer/quests";
 
 export default function Quest({
   id,
@@ -27,7 +27,7 @@ export default function Quest({
   logoUrl,
   tasks,
   title,
-}: Quest & {
+}: QuestType & {
   index: number;
 }): React.ReactElement {
   const router = useRouter();
