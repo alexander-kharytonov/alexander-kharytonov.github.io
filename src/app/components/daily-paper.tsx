@@ -1,3 +1,5 @@
+"use client";
+
 import _ from "lodash";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -37,13 +39,11 @@ export default function DailyPaper({
   subTitle,
   title,
   image,
-  onClick,
   animationDelay = 0,
 }: {
   subTitle?: string;
   title: string;
   image?: "box" | "partners";
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
   animationDelay?: number;
 }): React.ReactElement {
   const { mode } = useThemeContext();
@@ -112,7 +112,7 @@ export default function DailyPaper({
             </Box>
             <Button
               sx={{ position: "relative", zIndex: 1 }}
-              onClick={(event) => onClick(event)}
+              onClick={(event) => console.log(event)}
               variant="contained"
               size="large"
               fullWidth

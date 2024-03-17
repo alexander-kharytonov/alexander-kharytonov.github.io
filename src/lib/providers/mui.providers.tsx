@@ -1,5 +1,6 @@
 "use client";
 
+import _ from "lodash";
 import { Sora } from "next/font/google";
 import { createContext, useContext, useMemo } from "react";
 import {
@@ -25,7 +26,15 @@ export const ThemeContext = createContext({
   toggleTheme: () => {},
 });
 
-export const useThemeContext = () => useContext(ThemeContext);
+export const useThemeContext = () => {
+  const context = useContext(ThemeContext);
+
+  if (_.isUndefined(context)) {
+    throw new Error("Context must be used within a Provider");
+  }
+
+  return context;
+};
 
 export const THEME_MODE: { LIGHT: PaletteMode; DARK: PaletteMode } = {
   LIGHT: "light",

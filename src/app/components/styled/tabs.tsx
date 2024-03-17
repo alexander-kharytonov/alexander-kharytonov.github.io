@@ -1,6 +1,8 @@
+"use client";
+
 import { Tabs, styled } from "@mui/material";
 
-const StyledTabs = styled(Tabs)(({ theme }) => ({
+const StyledTabs = styled(Tabs)(() => ({
   "& .MuiTabs-flexContainer": {
     height: "100%",
   },

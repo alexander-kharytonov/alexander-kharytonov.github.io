@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge, styled } from "@mui/material";
 
 const StyledBadge = styled(Badge)(() => ({

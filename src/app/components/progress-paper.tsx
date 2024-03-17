@@ -1,3 +1,5 @@
+"use client";
+
 import _ from "lodash";
 import Image from "next/image";
 import { motion } from "framer-motion";

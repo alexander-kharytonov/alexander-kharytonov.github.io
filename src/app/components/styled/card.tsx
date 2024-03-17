@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, styled } from "@mui/material";
 
 const StyledCard = styled(Card)(({ theme }) => ({

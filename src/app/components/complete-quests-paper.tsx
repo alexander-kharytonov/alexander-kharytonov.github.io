@@ -1,3 +1,5 @@
+"use client";
+
 import _ from "lodash";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -20,12 +22,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   },
 }));
 
-export default function CompleteQuestsBox({
-  onClick,
-}: {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-}): React.ReactElement {
+export default function CompleteQuestsBox(): React.ReactElement {
   const { mode } = useThemeContext();
+
   return (
     <Box
       component={motion.div}
@@ -178,7 +177,7 @@ export default function CompleteQuestsBox({
               whileInView="onscreen"
             >
               <Button
-                onClick={(event) => onClick(event)}
+                onClick={(event) => console.log(event)}
                 variant="contained"
                 color="secondary"
                 sx={{ minWidth: "50%", width: { xs: "100%", md: "auto" } }}

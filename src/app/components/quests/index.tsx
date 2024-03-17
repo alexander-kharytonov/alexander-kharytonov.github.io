@@ -4,6 +4,7 @@ import _ from "lodash";
 import { Alert, Stack, Typography } from "@mui/material";
 import QuestSkeleton from "./quest-skeleton";
 import Quest from "./quest";
+import { Quests } from "lib/data-layer/quests";
 
 export default function Quests({
   quests,
@@ -12,13 +13,7 @@ export default function Quests({
   questsSize,
 }: {
   title: string;
-  quests?: Array<{
-    currentState: number;
-    image: string;
-    points: number;
-    stagesCount: number;
-    title: string;
-  }>;
+  quests?: Quests;
   useSkeleton?: boolean;
   questsSize?: number;
 }): React.ReactElement {
@@ -38,12 +33,7 @@ export default function Quests({
       ) : (
         <Stack spacing={2.5} direction="row" useFlexGap flexWrap="wrap">
           {_.map(quests, (quest, index) => (
-            <Quest
-              onClick={(event) => console.log(event)}
-              index={index}
-              key={index}
-              {...quest}
-            />
+            <Quest index={index} key={index} {...quest} />
           ))}
         </Stack>
       )}

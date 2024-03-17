@@ -1,3 +1,6 @@
+import _ from "lodash";
+import { UUID } from "crypto";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -10,35 +13,40 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { ImageNotSupported as ImageNotSupportedIcon } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { StyledLinearProgress, StyledCard } from "app/components/styled";
-import {
-  Star as StarIcon,
-  MetaMask as MetaMaskIcon,
-  System as SystemIcon,
-} from "lib/icons";
+import { Star as StarIcon, System as SystemIcon } from "lib/icons";
 import { useThemeContext } from "lib/providers/mui.providers";
+import { Quest } from "lib/data-layer/quests";
 
 export default function Quest({
-  currentState,
-  image,
-  onClick,
-  points,
-  stagesCount,
-  title,
+  id,
   index,
-}: {
-  currentState: number;
-  image: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-  points: number;
-  stagesCount: number;
-  title: string;
+  logoUrl,
+  tasks,
+  title,
+}: Quest & {
   index: number;
 }): React.ReactElement {
+  const router = useRouter();
   const theme = useTheme();
   const { mode } = useThemeContext();
+
+  const currentTask = _.size(_.filter(tasks, { completed: true }));
+  const tasksCount = _.size(tasks);
+  const points = _.sumBy(tasks, "points");
+
+  const handleChange = (event: React.SyntheticEvent, id: UUID) => {
+    event.preventDefault();
+
+    if (id) {
+      router.push(`/quests/${id}`, { scroll: false });
+    } else {
+      console.error("Quest ID is missing", event);
+    }
+  };
 
   const [sm, md, lg] = [
     useMediaQuery(theme.breakpoints.up("sm"), { noSsr: true }),
@@ -107,7 +115,25 @@ export default function Quest({
         scale={1.025}
       >
         <StyledCard>
-          <CardMedia sx={{ height: 250 }} image={image} title={title} />
+          {logoUrl ? (
+            <CardMedia
+              sx={{ height: 250 }}
+              image={logoUrl || "/images/quests/placeholder_10.jpg"}
+              title={title}
+            />
+          ) : (
+            <Box
+              sx={{ height: 250 }}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <ImageNotSupportedIcon
+                style={{ width: 120, height: 120, maxWidth: "100%" }}
+              />
+            </Box>
+          )}
+
           <CardContent sx={{ py: 1.5 }}>
             <Typography
               gutterBottom
@@ -127,24 +153,23 @@ export default function Quest({
                 <StarIcon viewBox="0 0 20 20" sx={{ fontSize: 18 }} />
                 <Typography variant="body2">{points} POINTs</Typography>
               </Stack>
-              <MetaMaskIcon viewBox="0 0 20 20" sx={{ fontSize: 18 }} />
             </Stack>
             <Box display="flex" alignItems="center" sx={{ mt: 0.5 }}>
               <Box sx={{ width: "100%", mr: 1 }}>
                 <StyledLinearProgress
                   variant="determinate"
-                  value={Math.round((currentState / stagesCount) * 100)}
+                  value={Math.round((currentTask / tasksCount) * 100)}
                 />
               </Box>
               <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
-                {`${currentState} / ${stagesCount}`}
+                {`${currentTask} / ${tasksCount}`}
               </Typography>
             </Box>
           </CardContent>
           <CardActions sx={{ pt: 0, pb: 2, px: 2 }}>
             <Button
               sx={{ position: "relative", zIndex: 1 }}
-              onClick={(event) => onClick(event)}
+              onClick={(event) => handleChange(event, id)}
               size="large"
               startIcon={
                 <SystemIcon viewBox="0 0 20 20" sx={{ color: "transparent" }} />

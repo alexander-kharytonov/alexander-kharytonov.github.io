@@ -36,7 +36,7 @@ export default function Header(): React.ReactElement {
           <Toolbar disableGutters>
             <Logo />
             <StyledTabs
-              value={pathname}
+              value={pathname.replace(/^\/([^\/]+)\/(.*)$/, "/$1")}
               onChange={handleChange}
               sx={{
                 mx: "auto",
@@ -45,10 +45,10 @@ export default function Header(): React.ReactElement {
               }}
               textColor="inherit"
             >
-              <Tab label="Main" disabled />
-              <Tab label="Quests" value="/" />
+              <Tab label="Main" value="/" />
+              <Tab label="Quests" value="/quests" />
               <Tab label="Launch Pad" disabled />
-              <Tab label="About" disabled />
+              <Tab label="About" value="/about" />
             </StyledTabs>
             <Stack
               direction="row"
