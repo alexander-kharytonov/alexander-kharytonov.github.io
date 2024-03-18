@@ -1,6 +1,7 @@
 import { Address } from "viem";
 
 export type User = {
+  id: number | null;
   completedQuestIDs: string[];
   completedTasksIDs: string[];
   points: number;

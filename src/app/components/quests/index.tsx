@@ -2,8 +2,7 @@
 
 import _ from "lodash";
 import { Alert, Stack, Typography } from "@mui/material";
-import QuestSkeleton from "./quest-skeleton";
-import Quest from "./quest";
+import { Quest, QuestSkeleton } from "./quest";
 import { Quests as QuestsType } from "lib/data-layer/quests";
 
 export default function Quests({
@@ -25,7 +24,7 @@ export default function Quests({
       {useSkeleton && questsSize ? (
         <Stack spacing={2.5} direction="row" useFlexGap flexWrap="wrap">
           {_.times(questsSize, (index) => (
-            <QuestSkeleton key={index} />
+            <QuestSkeleton key={`quest-skeleton_${index}`} />
           ))}
         </Stack>
       ) : _.isEmpty(quests) ? (

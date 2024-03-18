@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "LaunchJoy Quests",
+  title: "LaunchJoy - Quests",
 };
 
 export default function Layout({

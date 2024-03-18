@@ -36,11 +36,6 @@ export const useThemeContext = () => {
   return context;
 };
 
-export const THEME_MODE: { LIGHT: PaletteMode; DARK: PaletteMode } = {
-  LIGHT: "light",
-  DARK: "dark",
-};
-
 function getDesignTokens(mode: PaletteMode): ThemeOptions {
   return {
     breakpoints: {
@@ -53,7 +48,7 @@ function getDesignTokens(mode: PaletteMode): ThemeOptions {
       },
     },
     palette:
-      mode === THEME_MODE.DARK
+      mode === "dark"
         ? {
             mode,
             primary: { main: "#FFDE68", contrastText: "#21262F" },
@@ -123,16 +118,14 @@ export function ThemeProviders({
 }>): React.ReactElement {
   const [mode, updateMode] = useLocalStorage<PaletteMode>(
     "mui:theme:mode",
-    THEME_MODE.DARK
+    "dark"
   );
 
   const value = useMemo(
     () => ({
       mode,
       toggleTheme: () => {
-        updateMode((prevState) =>
-          prevState === THEME_MODE.LIGHT ? THEME_MODE.DARK : THEME_MODE.LIGHT
-        );
+        updateMode((prevState) => (prevState === "light" ? "dark" : "light"));
       },
     }),
     [mode, updateMode]

@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { UUID } from "crypto";
 import { useRouter } from "next/navigation";
 import {
   Box,
@@ -8,6 +7,7 @@ import {
   CardContent,
   CardMedia,
   Divider,
+  Skeleton,
   Stack,
   Typography,
   useMediaQuery,
@@ -21,7 +21,44 @@ import { Star as StarIcon, System as SystemIcon } from "lib/icons";
 import { useThemeContext } from "lib/providers/mui.providers";
 import { Quest as QuestType } from "lib/data-layer/quests";
 
-export default function Quest({
+const ADDITIONAL_STYLES = {
+  width: {
+    lg: "calc(20% - 16px)",
+    md: "calc(25% - 15px)",
+    sm: "calc(50% - 10px)",
+    xs: "calc(100%)",
+  },
+};
+
+export function QuestSkeleton(): React.ReactElement {
+  return (
+    <Box
+      sx={{
+        opacity: 0.5,
+        ...ADDITIONAL_STYLES,
+      }}
+    >
+      <StyledCard>
+        <Skeleton variant="rectangular" height={250} />
+        <CardContent sx={{ py: 1.5 }}>
+          <Skeleton variant="rounded" height={24} sx={{ mb: 1.25 }} />
+          <Skeleton variant="rounded" height={20} sx={{ mb: 1.5 }} />
+          <Skeleton variant="rounded" animation="wave" height={5} />
+        </CardContent>
+        <CardActions sx={{ pt: 0, pb: 2, px: 2 }}>
+          <Skeleton
+            variant="rounded"
+            width="100%"
+            height={42}
+            sx={{ mt: 0.9 }}
+          />
+        </CardActions>
+      </StyledCard>
+    </Box>
+  );
+}
+
+export function Quest({
   id,
   index,
   logoUrl,
@@ -38,7 +75,7 @@ export default function Quest({
   const tasksCount = _.size(tasks);
   const points = _.sumBy(tasks, "points");
 
-  const handleChange = (event: React.SyntheticEvent, id: UUID) => {
+  const handleChange = (event: React.SyntheticEvent, id: number) => {
     event.preventDefault();
 
     if (id) {
@@ -94,14 +131,7 @@ export default function Quest({
         amount: 0.1,
       }}
       whileInView="onscreen"
-      sx={{
-        minWidth: {
-          lg: "calc(20% - 16px)",
-          md: "calc(25% - 16px)",
-          sm: "calc(50% - 10px)",
-          xs: "calc(100%)",
-        },
-      }}
+      sx={ADDITIONAL_STYLES}
     >
       <Tilt
         perspective={1500}
@@ -136,9 +166,10 @@ export default function Quest({
 
           <CardContent sx={{ py: 1.5 }}>
             <Typography
-              gutterBottom
               variant="body1"
               component="div"
+              gutterBottom
+              noWrap
               sx={{ fontWeight: 700, mb: 1.25 }}
             >
               {title}

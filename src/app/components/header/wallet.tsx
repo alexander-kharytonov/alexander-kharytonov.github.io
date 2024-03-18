@@ -1,8 +1,6 @@
 import _ from "lodash";
 import { Address, Chain, formatUnits } from "viem";
-import { useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useBalance, useChainId, useSwitchChain } from "wagmi";
 import { Box, Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { StyledBadge } from "app/components/styled";
 import { truncateAddress } from "lib/utils";
@@ -12,21 +10,11 @@ export default function Wallet({
 }: {
   address: Address;
 }): React.ReactElement {
-  const queryClient = useQueryClient();
-  const { data: blockNumber } = useBlockNumber({ watch: true });
   const { chains } = useSwitchChain();
   const chainId = useChainId();
-  const {
-    data: balance,
-    isPending: isBalancePending,
-    queryKey,
-  } = useBalance({
+  const { data: balance, isPending: isBalancePending } = useBalance({
     address,
   });
-
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey });
-  }, [blockNumber, queryClient, queryKey]);
 
   const { name: currentNetwork } = _.find(chains, { id: chainId }) as Chain;
 

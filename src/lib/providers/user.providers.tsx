@@ -5,13 +5,14 @@ import { Address } from "viem";
 import { useAccount, useDisconnect } from "wagmi";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useReducer,
 } from "react";
 import { enqueueSnackbar } from "notistack";
-import { User, signUser } from "lib/data-layer/users";
+import { User, getUser, signUser } from "lib/data-layer/users";
 
 export enum DISPATCH_ACTIONS {
   UPDATE_USER_DATA = "UPDATE_USER_DATA",
@@ -19,6 +20,7 @@ export enum DISPATCH_ACTIONS {
 }
 
 const INITIAL_STATE: User = {
+  id: null,
   completedQuestIDs: [],
   completedTasksIDs: [],
   points: 0,
@@ -91,20 +93,30 @@ export function UserProviders({
     }
   }, [disconnect, walletAddress]);
 
+  const updateUser = useCallback(async () => {
+    try {
+      if (walletAddress) {
+        dispatch({
+          type: DISPATCH_ACTIONS.UPDATE_USER_DATA,
+          payload: await getUser({ walletAddress }),
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      }
+    }
+  }, [walletAddress]);
+
   const value = useMemo(
     () => ({
       ...state,
-      updateUser: (payload: User) => {
-        dispatch({
-          type: DISPATCH_ACTIONS.UPDATE_USER_DATA,
-          payload,
-        });
-      },
+      updateUser,
       reset: () => {
         dispatch({ type: DISPATCH_ACTIONS.RESET });
       },
     }),
-    [state]
+    [state, updateUser]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

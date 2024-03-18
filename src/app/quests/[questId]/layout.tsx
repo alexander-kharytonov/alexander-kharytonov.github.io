@@ -10,7 +10,7 @@ export async function generateMetadata({
   const quest = await getQuest(params.questId);
 
   return {
-    title: `LaunchJoy Quests - ${quest.title}`,
+    title: `LaunchJoy - Quests | ${quest.title}`,
   };
 }
 

@@ -1,15 +1,14 @@
 import _ from "lodash";
-import { UUID } from "crypto";
 
 export type Task = {
-  id: UUID;
+  id: number;
   title: string;
   description: string;
   points: number;
 };
 
 export type Quest = {
-  id: UUID;
+  id: number;
   title: string;
   description: string;
   logoUrl: string | null;
@@ -27,7 +26,7 @@ export async function getQuests(): Promise<Quests> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      next: { tags: ["quests"] },
     }
   );
 
@@ -49,7 +48,7 @@ export async function getQuest(questId: string): Promise<Quest> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      next: { tags: ["quest"] },
     }
   );
 
@@ -60,4 +59,32 @@ export async function getQuest(questId: string): Promise<Quest> {
   const quest = await response.json();
 
   return quest;
+}
+
+export async function checkTask({
+  userId,
+  taskId,
+}: {
+  userId: number;
+  taskId: number;
+}): Promise<boolean> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/quests/check-task`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, taskId }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to check task");
+  }
+
+  const { taskCompleted } = await response.json();
+
+  return taskCompleted;
 }

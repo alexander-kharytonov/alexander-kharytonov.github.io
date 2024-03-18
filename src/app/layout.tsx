@@ -11,7 +11,7 @@ import Header from "app/components/header";
 import Footer from "app/components/footer";
 
 export const metadata: Metadata = {
-  title: "LaunchJoy Quests",
+  title: "LaunchJoy - Main",
 };
 
 export const dynamic = "force-static";
