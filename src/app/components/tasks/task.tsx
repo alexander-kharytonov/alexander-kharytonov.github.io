@@ -9,15 +9,14 @@ import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { useThemeContext } from "lib/providers/mui.providers";
 import { useUserContext } from "lib/providers/user.providers";
 import { StarPoint as StarPointIcon } from "lib/icons";
-import { Task, checkTask } from "lib/data-layer/quests";
+import { Task as TaskType, checkTask } from "lib/data-layer/quests";
 import { LoadingButton } from "@mui/lab";
-import { getUser } from "lib/data-layer/users";
 
 export default function Task({
   id: taskId,
   description,
   points,
-}: Task): React.ReactElement {
+}: TaskType): React.ReactElement {
   const { completedTasksIDs, id: userId, updateUser } = useUserContext();
   const { mode } = useThemeContext();
   const [loading, updateLoading] = useState(false);
