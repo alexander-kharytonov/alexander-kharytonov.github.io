@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Address } from "viem";
 
 export type Task = {
   id: number;
@@ -20,7 +21,7 @@ export type Quests = Quest[];
 export type MintNFTResponse = {
   signature: string;
   message: string;
-  contractAddress: string;
+  contractAddress: Address;
 };
 
 export async function getQuests(): Promise<Quests> {
