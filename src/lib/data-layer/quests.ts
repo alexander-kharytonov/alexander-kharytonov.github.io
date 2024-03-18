@@ -27,6 +27,7 @@ export async function getQuests(): Promise<Quests> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     }
   );
 
@@ -48,6 +49,7 @@ export async function getQuest(questId: string): Promise<Quest> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     }
   );
 
