@@ -21,14 +21,7 @@ export default function Task({
   const { mode } = useThemeContext();
   const [loading, updateLoading] = useState(false);
 
-  const completed = _.includes(completedTasksIDs, taskId.toString());
-
-  useEffect(() => {
-    console.log("Task component mounted");
-    return () => {
-      console.log("Task component unmounted");
-    };
-  }, []);
+  const completed = _.includes(completedTasksIDs, taskId);
 
   const handleClick = useCallback(() => {
     async function varifayTask(parameters: { userId: number; taskId: number }) {
@@ -40,11 +33,11 @@ export default function Task({
         if (verified) {
           updateUser();
 
-          enqueueSnackbar("Task varifayed successfully!", {
+          enqueueSnackbar("Task verified successfully!", {
             variant: "success",
           });
         } else {
-          enqueueSnackbar("Task varifayed failed", {
+          enqueueSnackbar("Task verified failed", {
             variant: "error",
           });
         }
@@ -109,7 +102,7 @@ export default function Task({
                 variant="contained"
                 sx={{ minWidth: "50%", position: "relative", zIndex: 1 }}
               >
-                Varifay
+                Verify
               </LoadingButton>
             )}
           </Box>

@@ -3,6 +3,7 @@ import { getQuest, getQuests } from "lib/data-layer/quests";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { StarPoint as StarPointIcon } from "lib/icons";
 import Task from "app/components/tasks/task";
+import MintNFT from "app/components/quests/mint-nft";
 
 export async function generateStaticParams() {
   const quests = await getQuests();
@@ -53,9 +54,7 @@ export default async function Page({
       {_.map(tasks, (task, index) => (
         <Task key={index} {...task} />
       ))}
-      <Button color="success" variant="contained">
-        Mint NFTs
-      </Button>
+      <MintNFT questId={Number(params.questId)} />
     </Stack>
   );
 }

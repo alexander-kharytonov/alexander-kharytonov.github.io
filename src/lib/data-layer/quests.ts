@@ -17,6 +17,12 @@ export type Quest = {
 
 export type Quests = Quest[];
 
+export type MintNFTResponse = {
+  signature: string;
+  message: string;
+  contractAddress: string;
+};
+
 export async function getQuests(): Promise<Quests> {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/quests`,
@@ -26,6 +32,7 @@ export async function getQuests(): Promise<Quests> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
       next: { tags: ["quests"] },
     }
   );
@@ -48,6 +55,7 @@ export async function getQuest(questId: string): Promise<Quest> {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
       next: { tags: ["quest"] },
     }
   );
@@ -76,6 +84,7 @@ export async function checkTask({
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
       body: JSON.stringify({ userId, taskId }),
     }
   );
@@ -87,4 +96,37 @@ export async function checkTask({
   const { taskCompleted } = await response.json();
 
   return taskCompleted;
+}
+
+export async function mintNFTs({
+  userId,
+  questId,
+}: {
+  userId: number;
+  questId: number;
+}): Promise<MintNFTResponse> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/quests/mint-nft`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify({ userId, questId }),
+    }
+  );
+
+  if (!response.ok) {
+    const { message } = await response.json();
+
+    if (_.isString(message)) {
+      throw new Error(message);
+    } else {
+      throw new Error("Failed to mint NFT");
+    }
+  }
+
+  return await response.json();
 }

@@ -2,8 +2,8 @@ import { Address } from "viem";
 
 export type User = {
   id: number | null;
-  completedQuestIDs: string[];
-  completedTasksIDs: string[];
+  completedQuestIDs: number[];
+  completedTasksIDs: number[];
   points: number;
 };
 
@@ -20,6 +20,7 @@ export async function getUser({
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     }
   );
 
@@ -41,6 +42,7 @@ export async function signUser({
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    cache: "no-store",
     body: JSON.stringify({ walletAddress }),
   });
 

@@ -19,6 +19,7 @@ import Tilt from "react-parallax-tilt";
 import { StyledLinearProgress, StyledCard } from "app/components/styled";
 import { Star as StarIcon, System as SystemIcon } from "lib/icons";
 import { useThemeContext } from "lib/providers/mui.providers";
+import { useUserContext } from "lib/providers/user.providers";
 import { Quest as QuestType } from "lib/data-layer/quests";
 
 const ADDITIONAL_STYLES = {
@@ -70,6 +71,9 @@ export function Quest({
   const router = useRouter();
   const theme = useTheme();
   const { mode } = useThemeContext();
+  const { completedQuestIDs } = useUserContext();
+
+  const completed = _.includes(completedQuestIDs, id);
 
   const currentTask = _.size(_.filter(tasks, { completed: true }));
   const tasksCount = _.size(tasks);
@@ -202,13 +206,14 @@ export function Quest({
               sx={{ position: "relative", zIndex: 1 }}
               onClick={(event) => handleChange(event, id)}
               size="large"
+              color={completed ? "success" : "primary"}
               startIcon={
                 <SystemIcon viewBox="0 0 20 20" sx={{ color: "transparent" }} />
               }
               variant="contained"
               fullWidth
             >
-              Start a task
+              {completed ? "Completed" : "Start a task"}
             </Button>
           </CardActions>
         </StyledCard>
