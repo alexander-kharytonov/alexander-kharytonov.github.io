@@ -38,15 +38,20 @@ export default function MintNFT({
           parameters
         );
 
-        enqueueSnackbar(
-          `${message} / Contract address: ${contractAddress} / Signature: ${signature}`,
-          {
-            variant: "success",
-          }
-        );
         writeContract({
           address: contractAddress,
-          abi: ["function mint(string __message, bytes __signature)"],
+          abi: [
+            {
+              name: "mint",
+              type: "function",
+              stateMutability: "nonpayable",
+              inputs: [
+                { internalType: "string", name: "message", type: "string" },
+                { internalType: "string", name: "signature", type: "string" },
+              ],
+              outputs: [],
+            },
+          ],
           functionName: "mint",
           args: [message, signature],
         });
@@ -81,7 +86,9 @@ export default function MintNFT({
       )}
       {isConfirmed && <Alert severity="success">Transaction confirmed.</Alert>}
       {error && (
-        <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+        <Alert severity="error">
+          {(error as BaseError).shortMessage || error.message}
+        </Alert>
       )}
     </Stack>
   );
