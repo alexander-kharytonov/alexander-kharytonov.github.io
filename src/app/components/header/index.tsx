@@ -29,8 +29,8 @@ export default function Header(): React.ReactElement {
                 {address && <Wallet address={address} />}
               </Box>
               <ModeSwitcher />
-              <NavigationDrawer />
               {isConnected ? <Application /> : <Connectors />}
+              <NavigationDrawer />
             </Stack>
           </Toolbar>
         </Container>

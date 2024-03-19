@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { getQuest, getQuests } from "lib/data-layer/quests";
-import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { StarPoint as StarPointIcon } from "lib/icons";
 import Task from "app/components/tasks/task";
 import MintNFT from "app/components/quests/mint-nft";

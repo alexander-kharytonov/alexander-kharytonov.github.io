@@ -2,7 +2,8 @@
 
 import _ from "lodash";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useAccount } from "wagmi";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -24,6 +25,7 @@ import {
 import { StyledTabs } from "app/components/styled";
 import Logo from "app/components/logo";
 import { WalletInformtaion } from "./application";
+import { ConnectWallet } from "./connectors";
 
 const PERSONA_NAVIGATION = [
   { label: "Main", value: "/" },
@@ -60,10 +62,20 @@ export function Navigation(): React.ReactElement {
   );
 }
 export function NavigationDrawer(): React.ReactElement {
+  const { isConnected } = useAccount();
   const pathname = usePathname();
   const router = useRouter();
-
+  const [canIUseConnector, updateCanIUseConnector] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      typeof (window as any).ethereum !== "undefined"
+    ) {
+      updateCanIUseConnector(true);
+    }
+  }, []);
 
   const handleChange = (event: React.SyntheticEvent, value: string) => {
     event.preventDefault();
@@ -111,10 +123,23 @@ export function NavigationDrawer(): React.ReactElement {
         </AppBar>
         <Divider />
         <Box sx={{ flexFlow: 1, overflow: "auto" }}>
-          <Box sx={{ p: 2 }}>
-            <WalletInformtaion handleClose={() => toggleDrawer(false)} />
-          </Box>
-          <Divider />
+          {canIUseConnector ? (
+            isConnected ? (
+              <>
+                <Box sx={{ p: 2 }}>
+                  <WalletInformtaion handleClose={() => toggleDrawer(false)} />
+                </Box>
+                <Divider />
+              </>
+            ) : (
+              <>
+                <Box sx={{ p: 2, display: { xs: "flex", sm: "none" } }}>
+                  <ConnectWallet />
+                </Box>
+                <Divider />
+              </>
+            )
+          ) : null}
           <Typography variant="h6" sx={{ p: 2 }}>
             Navigation
           </Typography>

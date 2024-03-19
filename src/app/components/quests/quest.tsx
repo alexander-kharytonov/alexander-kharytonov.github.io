@@ -71,11 +71,15 @@ export function Quest({
   const router = useRouter();
   const theme = useTheme();
   const { mode } = useThemeContext();
-  const { completedQuestIDs } = useUserContext();
+  const { id: userId, completedQuestIDs, completedTasksIDs } = useUserContext();
 
   const completed = _.includes(completedQuestIDs, id);
+  const completedTasks = _.reduce(
+    tasks,
+    (memo, task) => (_.includes(completedTasksIDs, task.id) ? ++memo : memo),
+    0
+  );
 
-  const currentTask = _.size(_.filter(tasks, { completed: true }));
   const tasksCount = _.size(tasks);
   const points = _.sumBy(tasks, "points");
 
@@ -189,11 +193,11 @@ export function Quest({
               <Box sx={{ width: "100%", mr: 1 }}>
                 <StyledLinearProgress
                   variant="determinate"
-                  value={Math.round((currentTask / tasksCount) * 100)}
+                  value={Math.round((completedTasks / tasksCount) * 100)}
                 />
               </Box>
               <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
-                {`${currentTask} / ${tasksCount}`}
+                {`${completedTasks} / ${tasksCount}`}
               </Typography>
             </Box>
           </CardContent>
@@ -201,6 +205,7 @@ export function Quest({
             <Button
               sx={{ position: "relative", zIndex: 1 }}
               onClick={(event) => handleChange(event, id)}
+              disabled={!userId}
               size="large"
               color={completed ? "success" : "primary"}
               startIcon={

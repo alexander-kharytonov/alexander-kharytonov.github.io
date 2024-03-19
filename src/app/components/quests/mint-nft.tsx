@@ -87,6 +87,7 @@ export default function MintNFT({
       <LoadingButton
         loading={loading || isPending}
         onClick={handleClick}
+        disabled={!userId}
         color="success"
         variant="contained"
         sx={{ minWidth: "50%", position: "relative", zIndex: 1 }}

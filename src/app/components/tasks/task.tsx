@@ -98,6 +98,7 @@ export default function Task({
             ) : (
               <LoadingButton
                 loading={loading}
+                disabled={!userId}
                 onClick={handleClick}
                 variant="contained"
                 sx={{ minWidth: "50%", position: "relative", zIndex: 1 }}

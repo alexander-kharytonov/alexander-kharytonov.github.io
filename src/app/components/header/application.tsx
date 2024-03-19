@@ -27,6 +27,7 @@ import {
 import { enqueueSnackbar } from "notistack";
 import { Application as ApplicationIcon } from "lib/icons";
 import { useState } from "react";
+import { useUserContext } from "lib/providers/user.providers";
 
 export function WalletInformtaion({
   handleClose,
@@ -47,6 +48,7 @@ export function WalletInformtaion({
       },
     },
   });
+  const { reset } = useUserContext();
 
   const chainId = useChainId();
 
@@ -145,7 +147,10 @@ export function WalletInformtaion({
       </FormControl>
       <Button
         endIcon={<LogoutIcon fontSize="small" />}
-        onClick={() => disconnect()}
+        onClick={() => {
+          reset();
+          disconnect();
+        }}
         color="error"
       >
         Disconnect

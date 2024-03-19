@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { BaseError, useConnect } from "wagmi";
 import {
   Avatar,
+  Box,
   List,
   ListItemAvatar,
   ListItemButton,
@@ -15,8 +16,7 @@ import { LoadingButton } from "@mui/lab";
 import { Wallet as WalletIcon } from "@mui/icons-material";
 import { enqueueSnackbar } from "notistack";
 
-export default function Connectors(): React.ReactElement | null {
-  const [canIUseConnector, updateCanIUseConnector] = useState(false);
+export function ConnectWallet(): React.ReactElement {
   const { connect, connectors, isPending } = useConnect({
     mutation: {
       onSuccess: () => {
@@ -43,16 +43,7 @@ export default function Connectors(): React.ReactElement | null {
     updateLoadingButtonRef(null);
   };
 
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      typeof (window as any).ethereum !== "undefined"
-    ) {
-      updateCanIUseConnector(true);
-    }
-  }, []);
-
-  return canIUseConnector ? (
+  return (
     <>
       <LoadingButton
         loading={isPending}
@@ -60,7 +51,7 @@ export default function Connectors(): React.ReactElement | null {
         startIcon={<WalletIcon />}
         variant="outlined"
         color="inherit"
-        sx={{ border: 0 }}
+        sx={{ border: { sm: 0 }, width: { xs: "100%", sm: "auto" } }}
       >
         Connect wallet
       </LoadingButton>
@@ -95,5 +86,24 @@ export default function Connectors(): React.ReactElement | null {
         })}
       </Menu>
     </>
+  );
+}
+
+export default function Connectors(): React.ReactElement | null {
+  const [canIUseConnector, updateCanIUseConnector] = useState(false);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      typeof (window as any).ethereum !== "undefined"
+    ) {
+      updateCanIUseConnector(true);
+    }
+  }, []);
+
+  return canIUseConnector ? (
+    <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+      <ConnectWallet />
+    </Box>
   ) : null;
 }
