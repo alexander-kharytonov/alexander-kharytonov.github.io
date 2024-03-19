@@ -19,7 +19,7 @@ export type Quest = {
 export type Quests = Quest[];
 
 export type MintNFTResponse = {
-  signature: string;
+  signature: Uint8Array;
   message: string;
   contractAddress: Address;
 };

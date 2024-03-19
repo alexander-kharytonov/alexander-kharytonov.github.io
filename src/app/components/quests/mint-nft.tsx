@@ -49,7 +49,7 @@ export default function MintNFT({
               stateMutability: "nonpayable",
               inputs: [
                 { internalType: "string", name: "message", type: "string" },
-                { internalType: "string", name: "signature", type: "string" },
+                { internalType: "bytes", name: "signature", type: "bytes" },
               ],
               outputs: [],
             },
