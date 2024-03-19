@@ -83,7 +83,7 @@ export function Quest({
     event.preventDefault();
 
     if (id) {
-      router.push(`/quests/${id}`, { scroll: false });
+      router.push(`/quests/${id}`);
     } else {
       console.error("Quest ID is missing", event);
     }
@@ -150,11 +150,7 @@ export function Quest({
       >
         <StyledCard>
           {logoUrl ? (
-            <CardMedia
-              sx={{ height: 250 }}
-              image={logoUrl || "/images/quests/placeholder_10.jpg"}
-              title={title}
-            />
+            <CardMedia sx={{ height: 250 }} image={logoUrl} title={title} />
           ) : (
             <Box
               sx={{ height: 250 }}

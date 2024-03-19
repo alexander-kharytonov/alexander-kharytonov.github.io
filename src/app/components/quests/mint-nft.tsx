@@ -34,12 +34,14 @@ export default function MintNFT({
       updateLoading(true);
 
       try {
-        const { message, contractAddress, signature } = await mintNFTs(
-          parameters
-        );
+        const {
+          message,
+          contractAddress: address,
+          signature,
+        } = await mintNFTs(parameters);
 
         writeContract({
-          address: contractAddress,
+          address,
           abi: [
             {
               name: "mint",
@@ -71,16 +73,11 @@ export default function MintNFT({
 
   return (
     <Stack spacing={2}>
-      <LoadingButton
-        loading={loading || isPending}
-        onClick={handleClick}
-        color="success"
-        variant="contained"
-        sx={{ minWidth: "50%", position: "relative", zIndex: 1 }}
-      >
-        {isPending ? "Confirming..." : "Mint NFT"}
-      </LoadingButton>
-      {hash && <Alert severity="info">Transaction Hash: {hash}</Alert>}
+      {hash && (
+        <Alert severity="info" style={{ wordWrap: "break-word" }}>
+          Transaction hash: {hash}
+        </Alert>
+      )}
       {isConfirming && (
         <Alert severity="info">Waiting for confirmation...</Alert>
       )}
@@ -90,6 +87,15 @@ export default function MintNFT({
           {(error as BaseError).shortMessage || error.message}
         </Alert>
       )}
+      <LoadingButton
+        loading={loading || isPending}
+        onClick={handleClick}
+        color="success"
+        variant="contained"
+        sx={{ minWidth: "50%", position: "relative", zIndex: 1 }}
+      >
+        {isPending ? "Confirming..." : "Mint NFT"}
+      </LoadingButton>
     </Stack>
   );
 }

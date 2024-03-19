@@ -65,7 +65,7 @@ export default function Task({
       glarePosition="all"
       scale={1.025}
     >
-      <Stack component={Paper} spacing={2} sx={{ p: 3 }}>
+      <Stack component={Paper} spacing={2} sx={{ p: 3 }} elevation={0}>
         <Stack
           spacing={2}
           direction="row"
