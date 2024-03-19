@@ -47,7 +47,6 @@ export function Navigation(): React.ReactElement {
   return (
     <StyledTabs
       value={pathname.replace(/^\/([^\/]+)\/(.*)$/, "/$1")}
-      onChange={handleChange}
       sx={{
         mx: "auto",
         alignSelf: "stretch",
@@ -56,7 +55,16 @@ export function Navigation(): React.ReactElement {
       textColor="inherit"
     >
       {_.map(PERSONA_NAVIGATION, (item, index) => (
-        <Tab {...item} key={index} sx={{ sm: { alignItems: "left" } }} />
+        <Tab
+          {...item}
+          onClick={(event) => {
+            if (item.value && pathname !== item.value) {
+              handleChange(event, item.value);
+            }
+          }}
+          key={index}
+          sx={{ sm: { alignItems: "left" } }}
+        />
       ))}
     </StyledTabs>
   );
