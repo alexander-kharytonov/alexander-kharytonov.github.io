@@ -1,3 +1,5 @@
+"use client";
+
 import _ from "lodash";
 import { BaseError, Chain } from "viem";
 import { useAccount, useChainId, useDisconnect, useSwitchChain } from "wagmi";
@@ -26,8 +28,10 @@ import { enqueueSnackbar } from "notistack";
 import { Application as ApplicationIcon } from "lib/icons";
 import { useState } from "react";
 
-export default function Application(): React.ReactElement | null {
-  const { address, isConnected } = useAccount();
+export function WalletInformtaion({
+  handleClose,
+}: Readonly<{ handleClose: Function }>): React.ReactElement {
+  const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const { chains, switchChain } = useSwitchChain({
     mutation: {
@@ -43,9 +47,8 @@ export default function Application(): React.ReactElement | null {
       },
     },
   });
+
   const chainId = useChainId();
-  const [buttonRef, updateButtonRef] = useState<null | HTMLElement>(null);
-  const open = Boolean(buttonRef);
 
   async function handleCopyAddress() {
     if (!address) {
@@ -67,6 +70,94 @@ export default function Application(): React.ReactElement | null {
 
   const { name: currentNetwork } = _.find(chains, { id: chainId }) as Chain;
 
+  return (
+    <Stack spacing={2}>
+      <Stack
+        spacing={2}
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Typography variant="h6">Your wallet</Typography>
+        <Button
+          endIcon={<LaunchIcon fontSize="small" />}
+          href={`https://bscscan.com/address/${address}`}
+          target="_blank"
+          title="View on BscScan"
+          size="small"
+          sx={{ textTransform: "none", px: 2 }}
+        >
+          View on BscScan
+        </Button>
+      </Stack>
+      <TextField
+        id="WALLET_ID"
+        label="Wallet ID"
+        variant="outlined"
+        value={address}
+        InputProps={{
+          readOnly: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                color="inherit"
+                onClick={handleCopyAddress}
+                size="small"
+                edge="end"
+              >
+                <ContentPasteIcon fontSize="inherit" />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        fullWidth
+      />
+      <FormControl fullWidth>
+        <InputLabel id="CURRENT_NETWORK_LABEL">Current network</InputLabel>
+        <Select
+          labelId="CURRENT_NETWORK_LABEL"
+          value={currentNetwork}
+          label="Current network"
+          renderValue={(value) => value}
+        >
+          {_.map(chains, (chain) => {
+            const { nativeCurrency } = chain;
+
+            return (
+              <MenuItem
+                key={chain.id}
+                disabled={chain.id === chainId}
+                selected={chain.id === chainId}
+                onClick={() => {
+                  handleClose();
+                  switchChain({ chainId: chain.id });
+                }}
+                value={chain.name}
+              >
+                <ListItemText
+                  primary={chain.name}
+                  secondary={`Native currency: ${nativeCurrency.symbol}`}
+                />
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+      <Button
+        endIcon={<LogoutIcon fontSize="small" />}
+        onClick={() => disconnect()}
+        color="error"
+      >
+        Disconnect
+      </Button>
+    </Stack>
+  );
+}
+
+export default function Application(): React.ReactElement {
+  const [buttonRef, updateButtonRef] = useState<null | HTMLElement>(null);
+  const open = Boolean(buttonRef);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     updateButtonRef(event.currentTarget);
   };
@@ -75,13 +166,13 @@ export default function Application(): React.ReactElement | null {
     updateButtonRef(null);
   };
 
-  return isConnected ? (
+  return (
     <>
       <Fab
         size="medium"
         color="primary"
         onClick={handleClick}
-        sx={{ flexShrink: 0 }}
+        sx={{ flexShrink: 0, display: { xs: "none", md: "flex" } }}
       >
         <ApplicationIcon sx={{ color: "transparent" }} />
       </Fab>
@@ -94,90 +185,9 @@ export default function Application(): React.ReactElement | null {
         sx={{ mt: 1.5 }}
       >
         <ListItem sx={{ whiteSpace: "nowrap" }}>
-          <Stack spacing={2}>
-            <Stack
-              spacing={2}
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography variant="h6">Your wallet</Typography>
-              <Button
-                endIcon={<LaunchIcon fontSize="small" />}
-                href={`https://bscscan.com/address/${address}`}
-                target="_blank"
-                title="View on BscScan"
-                size="small"
-                sx={{ textTransform: "none", px: 2 }}
-              >
-                View on BscScan
-              </Button>
-            </Stack>
-            <TextField
-              id="WALLET_ID"
-              label="Wallet ID"
-              variant="outlined"
-              value={address}
-              InputProps={{
-                readOnly: true,
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      color="inherit"
-                      onClick={handleCopyAddress}
-                      size="small"
-                      edge="end"
-                    >
-                      <ContentPasteIcon fontSize="inherit" />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              fullWidth
-            />
-            <FormControl fullWidth>
-              <InputLabel id="CURRENT_NETWORK_LABEL">
-                Current network
-              </InputLabel>
-              <Select
-                labelId="CURRENT_NETWORK_LABEL"
-                value={currentNetwork}
-                label="Current network"
-                renderValue={(value) => value}
-              >
-                {_.map(chains, (chain) => {
-                  const { nativeCurrency } = chain;
-
-                  return (
-                    <MenuItem
-                      key={chain.id}
-                      disabled={chain.id === chainId}
-                      selected={chain.id === chainId}
-                      onClick={() => {
-                        handleClose();
-                        switchChain({ chainId: chain.id });
-                      }}
-                      value={chain.name}
-                    >
-                      <ListItemText
-                        primary={chain.name}
-                        secondary={`Native currency: ${nativeCurrency.symbol}`}
-                      />
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-            <Button
-              endIcon={<LogoutIcon fontSize="small" />}
-              onClick={() => disconnect()}
-              color="error"
-            >
-              Disconnect
-            </Button>
-          </Stack>
+          <WalletInformtaion handleClose={handleClose} />
         </ListItem>
       </Menu>
     </>
-  ) : null;
+  );
 }

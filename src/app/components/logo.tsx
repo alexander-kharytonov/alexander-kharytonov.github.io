@@ -3,7 +3,9 @@ import Image from "next/image";
 import { Stack, Typography } from "@mui/material";
 import { useThemeContext } from "lib/providers/mui.providers";
 
-export default function Logo(): React.ReactElement {
+export default function Logo({
+  showTypography = true,
+}: Readonly<{ showTypography?: boolean }>): React.ReactElement {
   const { mode } = useThemeContext();
 
   return (
@@ -23,9 +25,11 @@ export default function Logo(): React.ReactElement {
         alt="LaunchJoy"
         priority={true}
       />
-      <Typography component="h2" variant="h4" sx={{ marginTop: 1 }}>
-        LaunchJoy
-      </Typography>
+      {showTypography && (
+        <Typography component="h2" variant="h4" sx={{ marginTop: 1 }}>
+          LaunchJoy
+        </Typography>
+      )}
     </Stack>
   );
 }
