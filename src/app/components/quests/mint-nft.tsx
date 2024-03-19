@@ -9,7 +9,7 @@ import {
 } from "wagmi";
 import { enqueueSnackbar } from "notistack";
 import { LoadingButton } from "@mui/lab";
-import { mintNFTs } from "lib/data-layer/quests";
+import { mintNFT } from "lib/data-layer/quests";
 import { useUserContext } from "lib/providers/user.providers";
 
 export default function MintNFT({
@@ -27,10 +27,7 @@ export default function MintNFT({
     });
 
   const handleClick = useCallback(() => {
-    async function varifayTask(parameters: {
-      userId: number;
-      questId: number;
-    }) {
+    async function mint(parameters: { userId: number; questId: number }) {
       updateLoading(true);
 
       try {
@@ -38,7 +35,7 @@ export default function MintNFT({
           message,
           contractAddress: address,
           signature,
-        } = await mintNFTs(parameters);
+        } = await mintNFT(parameters);
 
         writeContract({
           address,
@@ -67,7 +64,7 @@ export default function MintNFT({
     }
 
     if (userId) {
-      varifayTask({ userId, questId });
+      mint({ userId, questId });
     }
   }, [questId, userId, writeContract]);
 

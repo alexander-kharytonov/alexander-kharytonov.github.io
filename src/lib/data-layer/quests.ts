@@ -99,7 +99,7 @@ export async function checkTask({
   return taskCompleted;
 }
 
-export async function mintNFTs({
+export async function mintNFT({
   userId,
   questId,
 }: {
