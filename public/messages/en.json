@@ -1,0 +1,21 @@
+{
+  "languages": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "Change Language": "Change Language",
+    "Change Theme": "Change Theme"
+  },
+  "theme": {
+    "System": "System Theme",
+    "Light": "Light Theme",
+    "Dark": "Dark Theme"
+  },
+  "navigation": {
+    "Home": "Home",
+    "About Me": "About Me",
+    "Portfolio": "Portfolio",
+    "Contact": "Contact"
+  }
+}

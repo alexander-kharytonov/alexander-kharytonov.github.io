@@ -1,0 +1,21 @@
+{
+  "languages": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "Change Language": "Изменить язык",
+    "Change Theme": "Изменить тему"
+  },
+  "theme": {
+    "System": "Системная тема",
+    "Light": "Светлая тема",
+    "Dark": "Темная тема"
+  },
+  "navigation": {
+    "Home": "Главная",
+    "About Me": "Обо мне",
+    "Portfolio": "Портфолио",
+    "Contact": "Контакты"
+  }
+}
