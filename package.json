@@ -2,7 +2,7 @@
   "name": "alexander-kharytonov",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alexander-kharytonov.github.io",
+  "homepage": "https://alexander-kharytonov.vercel.app",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
