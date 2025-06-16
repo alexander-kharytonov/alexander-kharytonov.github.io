@@ -1,4 +1,10 @@
 {
+  "greeting": {
+    "Hello": "Hello!",
+    "My name is Alexander Kharytonov": "My name is Alexander Kharytonov.",
+    "Im a Software Engineer and UI Developer": "I'm a Software Engineer and UI Developer.",
+    "Perhaps Im the one youve been looking for": "Perhaps I'm the one you've been looking for..."
+  },
   "languages": {
     "en": "English",
     "ru": "Русский"

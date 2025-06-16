@@ -1,6 +1,40 @@
 'use client';
 
-import { createTheme } from '@mui/material/styles';
+import {
+  createTheme,
+  CssVarsThemeOptions,
+  Palette,
+  Theme,
+  useColorScheme,
+  useTheme,
+} from '@mui/material/styles';
+
+export function usePalette(): Palette {
+  const theme = useTheme<Theme & CssVarsThemeOptions>();
+  const { mode = 'system', systemMode } = useColorScheme();
+
+  const currentMode: 'light' | 'dark' =
+    mode === 'system'
+      ? systemMode === 'dark'
+        ? 'dark'
+        : 'light'
+      : mode === 'dark'
+        ? 'dark'
+        : 'light';
+
+  const colorSchemes = (
+    theme as unknown as {
+      colorSchemes?: Record<'light' | 'dark', { palette: Palette }>;
+    }
+  ).colorSchemes;
+
+  const palette =
+    colorSchemes && colorSchemes[currentMode]
+      ? colorSchemes[currentMode].palette
+      : theme.palette;
+
+  return palette;
+}
 
 const theme = createTheme({
   colorSchemes: {

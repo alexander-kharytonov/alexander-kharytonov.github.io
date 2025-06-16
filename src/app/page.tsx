@@ -4,5 +4,5 @@ import { Typography } from '@mui/material';
 export default function RootPage() {
   const t = useTranslations('navigation');
 
-  return <Typography>{t('Home')}</Typography>;
+  return <Typography sx={{ opacity: 0 }}>{t('Home')}</Typography>;
 }
