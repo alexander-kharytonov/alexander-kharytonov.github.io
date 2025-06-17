@@ -1,6 +1,7 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
-import Scene from '@/components/layout/scene';
+// import Scene from '@/components/layout/scene';
+import BackgroundScene from '@/components/layout/background-scene';
 import Header from '@/components/layout/header';
 import theme from '@/theme';
 
@@ -13,7 +14,8 @@ export function MuiProvider({
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme} defaultMode="system">
         <CssBaseline />
-        <Scene />
+        {/* <Scene /> */}
+        <BackgroundScene />
         <Header />
         <Container
           component={Box}
