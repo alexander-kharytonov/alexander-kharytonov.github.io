@@ -2,9 +2,9 @@
 
 import * as THREE from 'three';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useProgress } from '@react-three/drei';
-import { Box, useColorScheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { usePalette } from '@/theme';
 
@@ -18,10 +18,10 @@ function Clouds() {
       const cloudMaterial = new THREE.MeshLambertMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.2,
+        opacity: 0.1,
       });
 
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 10; i++) {
         const mesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
 
         mesh.position.set(
@@ -96,13 +96,13 @@ function Lights() {
 }
 
 function Group() {
-  const { scene } = useThree();
-  const { background } = usePalette();
+  // const { scene } = useThree();
+  // const { background } = usePalette();
   const group = useRef<THREE.Group>(null);
 
-  useEffect(() => {
-    scene.fog = new THREE.FogExp2(background.default, 0.0025);
-  }, [scene, background]);
+  // useEffect(() => {
+  //   scene.fog = new THREE.FogExp2(background.default, 0.001);
+  // }, [scene, background]);
 
   return (
     <group ref={group}>
@@ -115,7 +115,6 @@ function Group() {
 
 export default function Scene() {
   const { active, progress } = useProgress();
-  const { mode } = useColorScheme();
 
   const variants = {
     hidden: { opacity: 0, transition: { duration: 0.5, delay: 0.5 } },
@@ -136,7 +135,7 @@ export default function Scene() {
       >
         <Canvas camera={{ rotation: [1.16, -0.12, 0.27] }}>
           <Suspense fallback={null}>
-            <Group key={mode} />
+            <Group />
           </Suspense>
         </Canvas>
       </Box>

@@ -61,6 +61,17 @@ const theme = createTheme({
   typography: {
     fontFamily: 'var(--font-roboto)',
   },
+  components: {
+    MuiToolbar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          [theme.breakpoints.up('xs')]: {
+            minHeight: theme.spacing(9),
+          },
+        }),
+      },
+    },
+  },
 });
 
 export default theme;
