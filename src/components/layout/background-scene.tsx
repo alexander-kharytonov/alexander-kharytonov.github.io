@@ -4,15 +4,16 @@ import * as THREE from 'three';
 import { usePathname } from 'next/navigation';
 import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { motion, AnimatePresence } from 'framer-motion';
+// import { OrbitControls } from '@react-three/drei';
+import { Box } from '@mui/material';
+import { motion } from 'framer-motion';
 import { usePalette } from '@/theme';
 
 export function WaveGrid({ pathname }: { pathname: string }) {
   const mesh = useRef<THREE.Points>(null);
   const time = useRef(0);
   const { camera } = useThree();
-  const { primary, mode } = usePalette();
+  const { primary } = usePalette();
 
   const positions = useMemo(() => {
     const size = 50;
@@ -71,7 +72,7 @@ export function WaveGrid({ pathname }: { pathname: string }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color={primary.main} size={mode === 'dark' ? 0.1 : 0.2} />
+      <pointsMaterial color={primary.main} size={0.1} />
     </points>
   );
 }
@@ -80,20 +81,20 @@ export default function BackgroundScene() {
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-        style={{ position: 'fixed', width: '100%', height: '100%', zIndex: -1 }}
-      >
-        <Canvas camera={{ position: [20, 20, 20], fov: 45 }}>
-          <ambientLight intensity={0.4} />
-          <WaveGrid pathname={pathname} />
-          <OrbitControls />
-        </Canvas>
-      </motion.div>
-    </AnimatePresence>
+    <Box
+      position="fixed"
+      width="100%"
+      height="100%"
+      component={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <Canvas camera={{ position: [20, 20, 20], fov: 45 }}>
+        <ambientLight intensity={0.45} />
+        <WaveGrid pathname={pathname} />
+        {/* <OrbitControls /> */}
+      </Canvas>
+    </Box>
   );
 }

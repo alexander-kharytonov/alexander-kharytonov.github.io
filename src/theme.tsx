@@ -42,7 +42,7 @@ const theme = createTheme({
       palette: {
         primary: { main: '#4cc9f0' },
         secondary: { main: '#f72585' },
-        background: { default: '#f1f1f1', paper: '#f5f5f5' },
+        background: { default: '#fefefe', paper: '#f5f5f5' },
         text: { primary: '#212121', secondary: '#616161' },
       },
     },
@@ -50,8 +50,8 @@ const theme = createTheme({
       palette: {
         primary: { main: '#4cc9f0' },
         secondary: { main: '#f72585' },
-        background: { default: '#0f1117', paper: '#1a1c23' },
-        text: { primary: '#e0e0e0', secondary: '#9e9e9e' },
+        background: { default: '#3c3c3c', paper: '#5f5f5f' },
+        text: { primary: '#fefefe', secondary: '#9e9e9e' },
       },
     },
   },

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {
-  Drawer,
+  SwipeableDrawer,
   IconButton,
   type IconButtonProps,
   Stack,
@@ -32,12 +32,14 @@ export function MobileNavigation(props: IconButtonProps) {
       >
         <MenuIcon />
       </IconButton>
-      <Drawer
+      <SwipeableDrawer
         anchor="right"
         open={open}
         onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
         slotProps={{
-          paper: { sx: { width: { xs: '100%', sm: 320 } } },
+          // backdrop: { invisible: true },
+          paper: { elevation: 0, sx: { width: { xs: '100%', sm: 320 } } },
         }}
         aria-hidden={!open}
       >
@@ -55,7 +57,7 @@ export function MobileNavigation(props: IconButtonProps) {
             <MenuOpenIcon sx={{ transform: 'scaleX(-1)' }} />
           </IconButton>
         </Toolbar>
-      </Drawer>
+      </SwipeableDrawer>
     </>
   );
 }

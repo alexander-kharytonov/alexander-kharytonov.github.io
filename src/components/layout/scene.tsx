@@ -2,7 +2,7 @@
 
 import * as THREE from 'three';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useProgress } from '@react-three/drei';
 import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
@@ -96,13 +96,13 @@ function Lights() {
 }
 
 function Group() {
-  // const { scene } = useThree();
-  // const { background } = usePalette();
+  const { scene } = useThree();
+  const { background } = usePalette();
   const group = useRef<THREE.Group>(null);
 
-  // useEffect(() => {
-  //   scene.fog = new THREE.FogExp2(background.default, 0.001);
-  // }, [scene, background]);
+  useEffect(() => {
+    scene.fog = new THREE.FogExp2(background.default, 0.001);
+  }, [scene, background]);
 
   return (
     <group ref={group}>
@@ -122,7 +122,7 @@ export default function Scene() {
   };
 
   return (
-    <Box position="fixed" width="100%" height="100%" zIndex={-1}>
+    <Box position="fixed" width="100%" height="100%">
       <Box
         position="absolute"
         width="100%"
