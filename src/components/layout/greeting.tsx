@@ -42,13 +42,13 @@ export default function Greeting() {
     if (currentStep < messages.length - 1) {
       const stepTimeout = setTimeout(
         () => setCurrentStep((prev) => prev + 1),
-        2500,
+        3000,
       );
 
       return () => clearTimeout(stepTimeout);
     }
 
-    const endTimeout = setTimeout(() => handleCloseGreeting(), 3500);
+    const endTimeout = setTimeout(() => handleCloseGreeting(), 5000);
     return () => clearTimeout(endTimeout);
   }, [showGreeting, currentStep, messages.length]);
 
@@ -64,6 +64,7 @@ export default function Greeting() {
           zIndex: theme.zIndex.drawer + 1,
           bgcolor: 'background.default',
         })}
+        transitionDuration={{ enter: 500, exit: 500 }}
       >
         <AnimatePresence mode="wait">
           {showGreeting && (

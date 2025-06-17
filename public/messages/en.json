@@ -5,6 +5,11 @@
     "Im a Software Engineer and UI Developer": "I'm a Software Engineer and UI Developer.",
     "Perhaps Im the one youve been looking for": "Perhaps I'm the one you've been looking for..."
   },
+  "about": {
+    "name": "Alexander Kharytonov",
+    "profession": "Software Engineer / UI Developer",
+    "summary": "Disciplined and detail-oriented Frontend Engineer with 12+ years in HTML/CSS and 6+ years in JavaScript development. Specialized in building responsive, pixel-perfect interfaces using React, TypeScript, and modern UI libraries. Strong experience in Agile teams and cross-functional collaboration."
+  },
   "languages": {
     "en": "English",
     "ru": "Русский"

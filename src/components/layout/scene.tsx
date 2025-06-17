@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useProgress } from '@react-three/drei';
-import { Box } from '@mui/material';
+import { Box, useColorScheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { usePalette } from '@/theme';
 
@@ -115,6 +115,7 @@ function Group() {
 
 export default function Scene() {
   const { active, progress } = useProgress();
+  const { mode } = useColorScheme();
 
   const variants = {
     hidden: { opacity: 0, transition: { duration: 0.5, delay: 0.5 } },
@@ -135,7 +136,7 @@ export default function Scene() {
       >
         <Canvas camera={{ rotation: [1.16, -0.12, 0.27] }}>
           <Suspense fallback={null}>
-            <Group />
+            <Group key={mode} />
           </Suspense>
         </Canvas>
       </Box>

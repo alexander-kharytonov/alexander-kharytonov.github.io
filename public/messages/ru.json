@@ -5,6 +5,11 @@
     "Im a Software Engineer and UI Developer": "Я Software Engineer и UI-разработчик.",
     "Perhaps Im the one youve been looking for": "Возможно, я тот, кого вы искали..."
   },
+  "about": {
+    "name": "Александр Харитонов",
+    "profession": "Software Engineer / UI Developer",
+    "summary": "Дисциплинированный и внимательный Frontend Engineer с более чем 12-летним опытом в HTML/CSS и более 6 лет в разработке на JavaScript. Специализируюсь на создании отзывчивых, пиксель-перфект интерфейсов с использованием React, TypeScript и современных UI-библиотек. Имею сильный опыт работы в Agile-командах и кросс-функциональном сотрудничестве."
+  },
   "languages": {
     "en": "English",
     "ru": "Русский"
