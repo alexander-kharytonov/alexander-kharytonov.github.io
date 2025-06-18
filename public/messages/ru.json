@@ -24,9 +24,10 @@
     "Dark": "Темная тема"
   },
   "navigation": {
-    "Home": "Главная",
-    "About Me": "Обо мне",
-    "Portfolio": "Портфолио",
+    "Navigation": "Навигация",
+    "Home": "Обо мне",
+    "Experience": "Опыт работы",
+    "Skills": "Навыки",
     "Contact": "Контакты"
   }
 }

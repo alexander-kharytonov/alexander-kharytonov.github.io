@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Typography, Stack } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export default function RootPage() {
+export default function ContactPage() {
   const t = useTranslations('navigation');
 
   return (
@@ -16,7 +16,7 @@ export default function RootPage() {
         transition={{ duration: 0.5, delay: 0.25 }}
         flexGrow={1}
       >
-        <Typography>{t('Home')}</Typography>
+        <Typography>{t('Contact')}</Typography>
       </Stack>
     </AnimatePresence>
   );

@@ -66,7 +66,7 @@ export default function Greeting() {
         })}
         transitionDuration={{ enter: 500, exit: 500 }}
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {showGreeting && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}

@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import ThemeSwitcher from '@/components/theme-switcher';
 import LocaleSwitcher from '@/components/locale-switcher';
-import { MobileNavigation } from './navigation';
+import Navigation, { MobileNavigation } from './navigation';
 import { getInitials } from '@/utils';
 
 export default function Header() {
@@ -41,8 +41,13 @@ export default function Header() {
         borderColor: 'divider',
       }}
     >
-      <Toolbar>
-        <ListItem component="div" sx={{ mr: 'auto' }} disablePadding>
+      <Toolbar
+        component={Stack}
+        spacing={2}
+        direction="row"
+        justifyContent="space-between"
+      >
+        <ListItem component="div" sx={{ width: 'auto' }} disablePadding>
           <ListItemAvatar>
             <Avatar alt={displayName} sx={{ bgcolor: 'primary.main' }}>
               {getInitials(displayName)}
@@ -50,6 +55,7 @@ export default function Header() {
           </ListItemAvatar>
           <ListItemText primary={displayName} secondary={t('profession')} />
         </ListItem>
+        <Navigation sx={{ display: { xs: 'none', md: 'inline-flex' } }} />
         <Stack
           spacing={2}
           direction="row"

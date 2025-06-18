@@ -24,9 +24,10 @@
     "Dark": "Dark Theme"
   },
   "navigation": {
-    "Home": "Home",
-    "About Me": "About Me",
-    "Portfolio": "Portfolio",
+    "Navigation": "Navigation",
+    "Home": "About Me",
+    "Experience": "Experience",
+    "Skills": "Skills",
     "Contact": "Contact"
   }
 }
