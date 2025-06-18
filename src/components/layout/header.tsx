@@ -21,7 +21,7 @@ export default function Header() {
   const t = useTranslations('about');
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 0,
+    threshold: 8,
   });
 
   const displayName = t('name');
@@ -37,8 +37,8 @@ export default function Header() {
       transition={{ duration: 0.25, ease: 'easeInOut' }}
       sx={{
         backgroundColor: trigger ? 'background.default' : 'transparent',
-        borderBottom: trigger ? '1px solid' : 'none',
-        borderColor: 'divider',
+        borderBottom: '1px solid',
+        borderColor: trigger ? 'divider' : 'transparent',
       }}
     >
       <Toolbar
